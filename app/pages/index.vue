@@ -27,7 +27,7 @@ const features = [
     icon: 'i-lucide-bar-chart-3'
   },
   {
-    title: 'Multi-dispositivo',
+    title: 'Dispositivos',
     description: 'Accede desde cualquier lugar. Funciona en tu computadora, tablet o móvil para que siempre tengas el control.',
     icon: 'i-lucide-smartphone'
   }
