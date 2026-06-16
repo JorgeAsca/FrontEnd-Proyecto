@@ -1,39 +1,36 @@
+# --- Etapa 1: Construcción ---
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Instalar pnpm
-RUN npm install -g pnpm
+# Copiar archivos de dependencias
+COPY package*.json ./
 
-# Copiar archivos de configuracion del workspace
-COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-COPY tsconfig.json ./
+# Instalar dependencias con npm
+RUN npm install
 
-# Copiar todo el codigo fuente
-COPY apps ./apps
-COPY libs ./libs
+# Copiar todo el código fuente del frontend
+COPY . .
 
-# Instalar dependencias
-RUN pnpm install --frozen-lockfile
+# Construir el frontend de Nuxt
+RUN npm run build
 
-# Construir el frontend de Panel
-WORKDIR /app/apps/Panel
-RUN pnpm run build
-
-# --- Imagen final ---
+# --- Etapa 2: Imagen final ---
 FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Copiar la carpeta generada en el paso anterior
-COPY --from=builder /app/apps/Panel/.output ./apps/Panel/.output
+# Copiar solo la carpeta generada en el build (.output)
+COPY --from=builder /app/.output ./.output
 
-# Configurar variables de entorno
+# Configurar variables de entorno requeridas por Nuxt
 ENV PORT=3000
 ENV NODE_ENV=production
+# HOST 0.0.0.0 es necesario para exponerlo en Docker
+ENV HOST=0.0.0.0 
 
 # Exponer el puerto
 EXPOSE 3000
 
-# Levantar el servidor de produccion
-CMD ["node", "apps/Panel/.output/server/index.mjs"]
+# Levantar el servidor de producción
+CMD ["node", ".output/server/index.mjs"]
