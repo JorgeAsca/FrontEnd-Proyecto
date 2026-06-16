@@ -17,7 +17,7 @@ const features = [
     icon: 'i-lucide-users'
   },
   {
-    title: 'Alertas Inteligentes',
+    title: 'Alertas',
     description: 'Recibe notificaciones cuando el stock esté bajo, cuando un producto esté por caducar o cuando se complete un pedido.',
     icon: 'i-lucide-bell'
   },
