@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: tu-usuario-dockerhub/frontend-proyecto:latest 
+        image: jorgeas/frontend-proyecto:latest 
         ports:
         - containerPort: 3000
         imagePullPolicy: Always
