@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+:root {
+  --ui-primary: var(--color-emerald-500);
+  --ui-radius: 0.5rem;
+}

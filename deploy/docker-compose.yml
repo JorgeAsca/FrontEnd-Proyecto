@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  panel-frontend:
+    build:
+      context: ../../../
+      dockerfile: ./apps/Panel/deploy/Dockerfile
+    image: iventapp/panel-frontend:latest
+    container_name: panel-frontend
+    restart: unless-stopped
+    environment:
+      - NUXT_PUBLIC_API_BASE=${NUXT_PUBLIC_API_BASE}
+    ports:
+      - "8080:3000"
+    networks:
+      - ivent-network
+
+networks:
+  ivent-network:
+    external: true
